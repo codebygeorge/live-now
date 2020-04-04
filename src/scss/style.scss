@@ -1,0 +1,33 @@
+//@import './fonts/fonts.css';
+//@import '../../node_modules/bootstrap/dist/css/bootstrap';
+//@import '../../node_modules/react-id-swiper/lib/styles/scss/swiper';
+
+@import "_reset.scss";
+@import "_normalize.scss";
+
+@import "_constants.scss";
+@import "_global.scss";
+
+//Components
+@import "./components/header";
+
+//Pages
+@import "./pages/item";
+
+
+//@import "./components/footer";
+//@import "./components/innerTopView";
+//@import "./components/finSlider";
+//@import "./components/myComponents";
+//@import "./pages/landing";
+//@import "./pages/performance";
+//@import "./pages/dashboard";
+//@import "./pages/pop";
+//
+//
+////Admin
+//@import "./../admin/scss/global";
+//@import "./../admin/scss/components/header";
+//@import "./../admin/scss/components/menu";
+//@import "./../admin/scss/components/pageBlock";
+//@import "./../admin/scss/components/galleryBlock";
