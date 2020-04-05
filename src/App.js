@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
+import {Route} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './scss/style.scss';
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+// import NotFound from "./views/NotFound";v
+import Landing from "./pages/Landing";
+
+class App extends Component {
+
+    render() {
+        return (
+            <div className="App">
+                <Header/>
+
+                <main className='main'>
+                    <Switch>
+                        <Route exact path="/" component={Landing}/>
+                        <Redirect to="/"/>
+                    </Switch>
+                </main>
+
+                <Footer/>
+
+            </div>
+        );
+    }
 }
 
-export default App;
+export default withRouter(props => <App {...props}/>);
