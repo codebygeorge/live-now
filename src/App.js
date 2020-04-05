@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 // import NotFound from "./views/NotFound";v
 import Landing from "./pages/Landing";
+import Login from "./pages/Login";
 
 class App extends Component {
 
@@ -20,6 +21,7 @@ class App extends Component {
                 <main className='main'>
                     <Switch>
                         <Route exact path="/" component={Landing}/>
+                        <Route exact path="/login" component={Login}/>
                         <Redirect to="/"/>
                     </Switch>
                 </main>
