@@ -1,0 +1,37 @@
+
+.panel-wrapper {
+  padding-top: 20px;
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $colorLight;
+    }
+
+    h4 {
+      font-weight: 500;
+      color: $colorDark;
+      text-align: center;
+      user-select: none;
+    }
+
+    .MuiIconButton-root {
+      height: 34px;
+      width: 34px;
+      padding: 0;
+
+      .MuiIconButton-label {
+        font-size: 0.875rem;
+        color: $colorLight;
+      }
+    }
+
+
+  }
+}
