@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Toolbar from "@material-ui/core/Toolbar";
 import {Collapse, Button, IconButton} from '@material-ui/core';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const useStyles = makeStyles((theme) => ({
     root: {

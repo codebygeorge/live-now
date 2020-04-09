@@ -1,0 +1,74 @@
+{
+  "categories": [
+    {
+      "title": "Gaming",
+      "userIds": [
+        0,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Fitness",
+      "userIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "title": "Coding",
+      "userIds": [
+        0,
+        2
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "name": "Katy",
+      "followers": "1651",
+      "last_stream": "01.05.2020",
+      "profile_picture": "https://picsum.photos/500/500",
+      "background_picture": "",
+      "status_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+    },
+    {
+      "id": 1,
+      "name": "Man",
+      "followers": "10101010",
+      "last_stream": "01.05.2020",
+      "profile_picture": "",
+      "background_picture": "https://picsum.photos/1000/1000",
+      "status_text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+    },
+    {
+      "id": 2,
+      "name": "Jhon",
+      "followers": "5450",
+      "last_stream": "01.05.2020",
+      "profile_picture": "https://picsum.photos/500/500",
+      "background_picture": "https://picsum.photos/1000/1000",
+      "status_text": "tandard dummy text ever sambled it to make a type specimen book"
+    },
+    {
+      "id": 3,
+      "name": "George",
+      "followers": "10",
+      "last_stream": "01.05.2020",
+      "profile_picture": "",
+      "background_picture": "",
+      "status_text": "Lorem Ipsum iy's standard duof type and scrambled it to make a type specimen book"
+    },
+    {
+      "id": 4,
+      "name": "Mike",
+      "followers": "1012",
+      "last_stream": "01.05.2020",
+      "profile_picture": "https://picsum.photos/500/500",
+      "background_picture": "https://picsum.photos/1000/1000",
+      "status_text": "Lorem Ips."
+    }
+  ],
+  "followers": [0, 3]
+}
