@@ -1,7 +1,14 @@
 import React from 'react';
 import axios from "axios";
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faCircle} from '@fortawesome/free-regular-svg-icons'; //FAR
+import {
+    faCircle,
+    faHeart as farHeart,
+    faDotCircle
+} from '@fortawesome/free-regular-svg-icons'; //FAR
+import {
+    faBuffer
+} from '@fortawesome/free-brands-svg-icons'; //FAB
 import {
     faBars,
     faCubes,
@@ -11,6 +18,9 @@ import {
     faUserCircle,
     faCaretDown,
     faCaretUp,
+    faEllipsisH,
+    faHeart as fasHeart,
+    faGamepad,
     faPlus,
     faTrash,
     faFile,
@@ -31,6 +41,12 @@ library.add(
     faAngleLeft,
     faCaretDown,
     faCaretUp,
+    faEllipsisH,
+    farHeart,
+    fasHeart,
+    faGamepad,
+    faBuffer,
+    faDotCircle
 );
 
 // window.location.hostname
@@ -60,6 +76,26 @@ export const myAxios = axios.create({
 
 export function normalizeString(variable) {
     return variable.replace(/_/g, " ")
+}
+
+export function nFormatter(num, digits) {
+    let si = [
+        {value: 1, symbol: ""},
+        {value: 1E3, symbol: "k"},
+        {value: 1E6, symbol: "M"},
+        {value: 1E9, symbol: "G"},
+        {value: 1E12, symbol: "T"},
+        {value: 1E15, symbol: "P"},
+        {value: 1E18, symbol: "E"}
+    ];
+    let rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    let i;
+    for (i = si.length - 1; i > 0; i--) {
+        if (num >= si[i].value) {
+            break;
+        }
+    }
+    return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 
 export const isDesktop = window.matchMedia("(min-width: 812px)").matches;
