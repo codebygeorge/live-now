@@ -1,3 +1,28 @@
 html, body {
-  font-family: "Arial", sans-serif;
+  font-family: 'Montserrat', sans-serif!important;
+  line-height: 1.5;
+}
+
+.main {
+  min-height: calc(100vh - (#{$header_height} + #{$footer_height}));
+}
+
+.page {
+  padding: 2% 4%;
+}
+
+.ffL {
+  font-weight: 300;
+}
+
+.ffR {
+  font-weight: normal;
+}
+
+.ffM {
+  font-weight: 500;
+}
+
+.ffB {
+  font-weight: 900;
 }

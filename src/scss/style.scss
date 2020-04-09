@@ -1,4 +1,4 @@
-//@import './fonts/fonts.css';
+@import './fonts/Montserrat/font_Montserrat.css';
 //@import '../../node_modules/bootstrap/dist/css/bootstrap';
 //@import '../../node_modules/react-id-swiper/lib/styles/scss/swiper';
 
@@ -11,6 +11,8 @@
 //Components
 @import "./components/header";
 @import "./components/footer";
+@import "./components/user_menu.scss";
+@import "./components/panel.scss";
 
 //Pages
 

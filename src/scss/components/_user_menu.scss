@@ -1,0 +1,31 @@
+
+.user-menu {
+
+  .toggle-button {
+    .MuiIconButton-root {
+      height: 40px;
+      width: 40px;
+      padding: unset;
+    }
+  }
+
+  .menu-icons {
+    font-size: 24px;
+    margin: auto;
+    color: $colorDark;
+    transition: color 0.3s;
+  }
+
+  .MuiListItem-gutters {
+    padding: 8px 0;
+
+    &:hover .menu-icons {
+      color: $colorMain;
+    }
+  }
+
+  .MuiListItemIcon-root {
+    min-width: 72px;
+  }
+
+}

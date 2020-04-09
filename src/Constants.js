@@ -4,6 +4,13 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {faCircle} from '@fortawesome/free-regular-svg-icons'; //FAR
 import {
     faBars,
+    faCubes,
+    faUsers,
+    faAngleRight,
+    faAngleLeft,
+    faUserCircle,
+    faCaretDown,
+    faCaretUp,
     faPlus,
     faTrash,
     faFile,
@@ -11,24 +18,19 @@ import {
     faSearch,
     faUndoAlt,
     faLink,
-    faSync,
-    faCircleNotch,
+    faSync
 } from '@fortawesome/free-solid-svg-icons';  //FAS
 
 //Add fontawesome icons
 library.add(
-    // faPlus,
-    // faTrash,
-    // faFile,
-    // faPen,
-    // faSearch,
-    // faTimesCircle,
-    // faUndoAlt,
-    // faLink,
-    // faSync
+    faUserCircle,
     faBars,
-    faCircleNotch,
-    faCircle,
+    faUsers,
+    faCubes,
+    faAngleRight,
+    faAngleLeft,
+    faCaretDown,
+    faCaretUp,
 );
 
 // window.location.hostname

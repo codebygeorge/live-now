@@ -1,21 +1,11 @@
 import React, {Component} from 'react';
-import {isDesktop} from "../Constants";
 
-class Landing extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            itemData: [],
-            loaded: false
-        };
-    }
+class Profile extends Component {
 
     render() {
-        const {itemData, loaded} = this.state;
 
         return (
-            <div className='page home'>
+            <div className='page dashboard'>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                     ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
@@ -44,5 +34,5 @@ class Landing extends Component {
     }
 }
 
-export default Landing;
+export default Profile;
 

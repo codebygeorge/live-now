@@ -1,25 +1,24 @@
-$textColor: #202631;
-$primaryColor: #0B1047;
-$primaryColorDeep: #0C1246;
-$secondaryColor:#1E3C58;
-$errorRed:#FC2929;
-$alertRed:#d32f2f;
+
+
+$colorLight: #af2ac3;
+$colorMain: #9223af;
+$colorDark: #741f9b;
+
+$alertRed: #d32f2f;
 $successGreen: #00ad0d;
 
+$textColor: #202631;
+
 $header_height: 64px;
-$footer_height: 176px;
+$footer_height: 60px;
 
-$header_height_mobile: 58px;
-//$footer_height_mobile: 200px;
-
-$txt_fz:18px;
 $title_fz: 36px;
+$txt_fz: 18px;
 $txt_lh: 1.8;
 
-$txt_fz_mobile: 15px;
 $title_fz_mobile: 22px;
+$txt_fz_mobile: 15px;
 $txt_lh_mobile: 1.5;
-
 
 $ff: 'Montserrat', sans-serif;
 $ffSB: 'Montserrat SemiBold', sans-serif;
@@ -27,7 +26,7 @@ $ffB: 'Montserrat Bold', sans-serif;
 $ffM: 'Montserrat Medium', sans-serif;
 
 
-$mobile_only: 'screen and (max-width: 812px)';  //450
+$mobile_only: 'screen and (max-width: 812px)'; //450
 $mobile_only_portrait: 'screen and (max-width: 812px) and (orientation: portrait)';
 $mobile_only_landscape: 'screen and (max-width: 812px) and (orientation: landscape)';
 $mobile_tablet: 'screen and (max-width: 1024px)';
