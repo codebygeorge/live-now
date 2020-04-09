@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import API, {catchAxiosError} from '../../utils/axiosEnv';
+import { setAuthToken } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,76 +41,92 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInWrapper() {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const submit = async (e) => {
+        e.preventDefault();
+        const {response, error} = await API.post('/auth/login', {
+            email,
+            password
+        }).catch(catchAxiosError);
+        if(error) console.log(error);
+        if(response && response.success && response.data.id){
+           setAuthToken(response.data.token);
+           return window.location.href = "/profile";
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs" style={{paddingTop: '50px', marginTop: '50px'}}>
             <CssBaseline />
             <Card className={classes.root} style={{padding: '20px'}}>
                 <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <form className={classes.form} noValidate onSubmit={submit}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            onChange={({target: {value}}) => setEmail(value)}
+                            autoFocus
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            onChange={({target: {value}}) => setPassword(value)}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FontAwesomeIcon icon="facebook-square"/>
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <FontAwesomeIcon icon="instagram-square"/>
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <FontAwesomeIcon icon="linkedin"/>
-                    </IconButton>
-                </CardActions>
+                    </form>
+                </div>
+                {/*<CardActions disableSpacing>*/}
+                {/*    <IconButton aria-label="add to favorites">*/}
+                {/*        <FontAwesomeIcon icon="facebook-square"/>*/}
+                {/*    </IconButton>*/}
+                {/*    <IconButton aria-label="share">*/}
+                {/*        <FontAwesomeIcon icon="instagram-square"/>*/}
+                {/*    </IconButton>*/}
+                {/*    <IconButton aria-label="share">*/}
+                {/*        <FontAwesomeIcon icon="linkedin"/>*/}
+                {/*    </IconButton>*/}
+                {/*</CardActions>*/}
             </Card>
         </Container>
     );
