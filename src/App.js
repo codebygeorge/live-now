@@ -13,6 +13,7 @@ import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
+import StreamPage from "./pages/StreamPage";
 
 import './scss/style.scss';
 
@@ -110,6 +111,7 @@ export default function App() {
                         <Route exact path="/signIn" component={SignIn}/>
                         <Route exact path="/signUp" component={SignUp}/>
                         <Route exact path="/profile" component={Profile}/>
+                        <Route exact path="/streamPage" component={StreamPage}/>
                         <Redirect to="/"/>
                     </Switch>
                 </main>
