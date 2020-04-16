@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button} from "react-bootstrap";
 import {isDesktop} from "../Constants";
 
 class Landing extends Component {
@@ -39,6 +40,15 @@ class Landing extends Component {
                     nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
                     accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
                 </p>
+                <Button
+                    size="md"
+                    variant="primary"
+                    onClick={() => {
+                        return window.location.href = "/streamPage";
+                    }}
+                >
+                    Go to make some stream
+                </Button>
             </div>
         );
     }

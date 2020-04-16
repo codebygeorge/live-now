@@ -10,7 +10,10 @@ import Panel from "./components/Panel";
 
 // import NotFound from "./views/NotFound";
 import Landing from "./pages/Landing";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
+import StreamPage from "./pages/StreamPage";
 
 import './scss/style.scss';
 
@@ -99,23 +102,21 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
         <div className={`${classes.root} App`}>
-
             <Header classes={classes}/>
-
             <div className={classes.content}>
                 <Toolbar/>
-
                 <main className='main'>
                     <Switch>
                         <Route exact path="/" component={Landing}/>
+                        <Route exact path="/signIn" component={SignIn}/>
+                        <Route exact path="/signUp" component={SignUp}/>
                         <Route exact path="/profile" component={Profile}/>
+                        <Route exact path="/streamPage" component={StreamPage}/>
                         <Redirect to="/"/>
                     </Switch>
                 </main>
-
                 <Footer/>
             </div>
-
             <Panel/>
         </div>
         </ThemeProvider>
