@@ -53,7 +53,7 @@ library.add(
 export const BASE_API_URL = '/';
 
 // export const BASE_API = 'localhost:8089/api';
-export const BASE_API = 'http://104.251.210.182:5000';
+export const BASE_API = 'https://livenowpw.com';
 export const MY_SECRET = 'MY_SECRET';
 
 export const BASE_MEDIA_API = `${BASE_API}/file/`;
