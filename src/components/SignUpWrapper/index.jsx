@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -9,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import API, {catchAxiosError} from "../../utils/axiosEnv";
+import {setAuthToken} from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,6 +35,45 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpWrapper() {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [username, setUserName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [validationErrors, setValidationErrors] = useState({firstname: '', lastname: '', password: '', email: '', username: ''});
+    const [errorMessages, setErrorMessages] = useState('');
+    const [disabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        const errors = Object.values(validationErrors);
+        for(let i = 0; i < errors.length; i++){
+            if(errors[i]) {
+                setDisabled(true);
+                return;
+            }
+        }
+        setDisabled(false);
+    }, [validationErrors]);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        const {response, error} = await API.post('/auth/signup', {
+            firstname: firstname, lastname: lastname ,email, password, username,
+        }).catch(catchAxiosError);
+        if(typeof error === 'object') {
+            const backEndErrorMessages = {};
+            const entries = Object.entries(error);
+            for(const [key, value] of entries){
+               backEndErrorMessages[key] = value;
+            }
+            setValidationErrors(backEndErrorMessages);
+        }
+        if(response && response.success && response.data.id){
+            setAuthToken(response.data.token);
+            return window.location.href = "/profile";
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -40,29 +82,70 @@ export default function SignUpWrapper() {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={submit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                error={!!(validationErrors.firstname)}
+                                helperText={validationErrors.firstname}
                                 autoComplete="fname"
-                                name="firstName"
+                                name="firstname"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="firstName"
+                                id="firstname"
                                 label="First Name"
                                 autoFocus
+                                onChange={({target: {value}}) => {
+                                    if(!value) {
+                                        setValidationErrors({...validationErrors, firstname: 'Not valid First Name'});
+                                    }else{
+                                        setValidationErrors({...validationErrors, firstname: ''});
+                                    }
+                                    setFirstName(value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                error={!!validationErrors.lastname}
+                                helperText={validationErrors.lastname}
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="lastName"
+                                id="lastname"
                                 label="Last Name"
-                                name="lastName"
+                                name="lastname"
                                 autoComplete="lname"
+                                onChange={({target: {value}}) => {
+                                    if(!value) {
+                                        setValidationErrors({...validationErrors, lastname: 'Not valid Last Name'});
+                                    }else{
+                                        setValidationErrors({...validationErrors, lastname: ''});
+                                    }
+                                    setLastName(value)
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
+                                error={!!validationErrors.username}
+                                helperText={validationErrors.username}
+                                onChange={({target: {value}}) => {
+                                    if(!value) {
+                                        setValidationErrors({...validationErrors, username: 'Not valid Email'});
+                                    }else {
+                                        setValidationErrors({...validationErrors, username: ''});
+                                    }
+                                    setUserName(value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -74,6 +157,16 @@ export default function SignUpWrapper() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                error={!!validationErrors.email}
+                                helperText={validationErrors.email}
+                                onChange={({target: {value}}) => {
+                                    if(!value) {
+                                        setValidationErrors({...validationErrors, email: 'Not valid Email'});
+                                    }else {
+                                        setValidationErrors({...validationErrors, email: ''});
+                                    }
+                                    setEmail(value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -86,6 +179,16 @@ export default function SignUpWrapper() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                error={!!validationErrors.password}
+                                helperText={validationErrors.password}
+                                onChange={({target: {value}}) => {
+                                    if(!value){
+                                        setValidationErrors({...validationErrors, password: 'Not valid Password'});
+                                    }else {
+                                        setValidationErrors({...validationErrors, password: ''});
+                                    }
+                                    setPassword(value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -101,12 +204,13 @@ export default function SignUpWrapper() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        disabled={disabled}
                     >
                         Sign Up
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/signIn" variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

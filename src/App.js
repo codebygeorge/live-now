@@ -107,8 +107,8 @@ export default function App() {
                 <Toolbar/>
                 <main className='main'>
                     <Switch>
-                        <Route exact path="/" component={Landing}/>
-                        <Route exact path="/signIn" component={SignIn}/>
+                        <Route exact path="/" component={SignIn}/>
+                        <Route exact path="/landing" component={Landing}/>
                         <Route exact path="/signUp" component={SignUp}/>
                         <Route exact path="/profile" component={Profile}/>
                         <Route exact path="/streamPage" component={StreamPage}/>

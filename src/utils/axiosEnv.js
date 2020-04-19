@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { getAuthToken } from './auth';
+import {BASE_API} from "../Constants";
 
-const server = 'http://104.251.210.182:5000/api';
+const server = BASE_API;
 // Add a response interceptor
 export const catchAxiosError = (error) => {
     console.log('ERROR', error);
@@ -32,8 +33,8 @@ API.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     const result = {};
-    if (response.data.error) {
-        result.error = response.data.error.details ? response.data.error.details : [{message: response.data.error}];
+    if (!response.data.success) {
+        result.error = response.data.message ? response.data.message : 'Something went wrong.';
     } else {
         result.response = response.data;
     }

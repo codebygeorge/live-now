@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -41,20 +39,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInWrapper() {
     const classes = useStyles();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState('');
+
     const submit = async (e) => {
         e.preventDefault();
-        const {response, error} = await API.post('/auth/login', {
+        const {response, error} = await API.post('/auth/signin', {
             email,
             password
         }).catch(catchAxiosError);
-        if(error) console.log(error);
+        if(error) setErrorMessage(error);
         if(response && response.success && response.data.id){
            setAuthToken(response.data.token);
            return window.location.href = "/profile";
         }
     };
+
+    const removeErrorMessageBtn =  (
+        <Button size="small" style={{color: 'white'}} onClick={() => setErrorMessage('')}>
+            X
+        </Button>
+    );
 
     return (
         <Container component="main" maxWidth="xs" style={{paddingTop: '50px', marginTop: '50px'}}>
@@ -64,6 +72,7 @@ export default function SignInWrapper() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
+                    {errorMessage && <SnackbarContent role="alert" style={{width: '100%', margin: '10px'}} message={errorMessage} action={removeErrorMessageBtn} />}
                     <form className={classes.form} noValidate onSubmit={submit}>
                         <TextField
                             variant="outlined"

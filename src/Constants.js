@@ -51,9 +51,8 @@ library.add(
 
 // window.location.hostname
 export const BASE_API_URL = '/';
-
 // export const BASE_API = 'localhost:8089/api';
-export const BASE_API = 'https://livenoeapi.co.uk';
+export const BASE_API = 'https://livenowapi.co.uk/api';
 export const MY_SECRET = 'MY_SECRET';
 
 export const BASE_MEDIA_API = `${BASE_API}/file/`;
