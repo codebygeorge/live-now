@@ -10,19 +10,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {redirectTo} from "../utils";
 
 const menuItems = [
     {
         title: "Profile",
-        icon: "user-circle"
+        icon: "user-circle",
+        link: '/profile',
     },
     {
         title: "Category",
-        icon: "cubes"
+        icon: "cubes",
+        link: '/categories'
     },
     {
         title: "My Followers",
-        icon: "users"
+        icon: "users",
+        link: '/details'
     },
     // {
     //     title: "Profile",
@@ -72,7 +76,7 @@ export default function Header(props) {
                 <List>
                     {menuItems.map((item, index) => (
                         <ListItem button key={index}>
-                            <ListItemIcon>
+                            <ListItemIcon onClick={() => redirectTo(item.link)}>
                                 <FontAwesomeIcon className='menu-icons' icon={item.icon}/>
                             </ListItemIcon>
                             <ListItemText>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useReducer} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
 import {ThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
@@ -12,10 +12,12 @@ import Panel from "./components/Panel";
 import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Details from "./pages/Details";
 import Profile from "./pages/Profile";
 import StreamPage from "./pages/StreamPage";
-
+import UserContext, {initialState, UserReducer} from "./components/UserContext";
 import './scss/style.scss';
+import './scss/bootstrap/bootstrap.min.css';
 
 const drawerWidth = 200;
 const theme = createMuiTheme({
@@ -98,27 +100,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
     const classes = useStyles();
-
+    const [userState, userDispatch] = useReducer(UserReducer, initialState);
+    const UserProviderValue = { userState, userDispatch };
     return (
         <ThemeProvider theme={theme}>
-        <div className={`${classes.root} App`}>
-            <Header classes={classes}/>
-            <div className={classes.content}>
-                <Toolbar/>
-                <main className='main'>
-                    <Switch>
-                        <Route exact path="/" component={SignIn}/>
-                        <Route exact path="/landing" component={Landing}/>
-                        <Route exact path="/signUp" component={SignUp}/>
-                        <Route exact path="/profile" component={Profile}/>
-                        <Route exact path="/streamPage" component={StreamPage}/>
-                        <Redirect to="/"/>
-                    </Switch>
-                </main>
-                <Footer/>
+            <div className={`${classes.root} App`}>
+                <UserContext.Provider value={UserProviderValue}>
+                    <Header classes={classes}/>
+                    <div className={classes.content}>
+                        <Toolbar/>
+                        <main className='main'>
+                            <Switch>
+                                <Route exact path="/" component={SignIn}/>
+                                <Route exact path="/landing" component={Landing}/>
+
+                                    <Route exact path="/details" component={Details}/>
+                                    <Route exact path="/categories" component={Profile}/>
+                                <Route exact path="/signUp" component={SignUp}/>
+                                <Route exact path="/streamPage" component={StreamPage}/>
+                                <Redirect to="/"/>
+                            </Switch>
+                        </main>
+                        <Footer/>
+                    </div>
+                    <Panel/>
+                </UserContext.Provider>
             </div>
-            <Panel/>
-        </div>
         </ThemeProvider>
     );
 }

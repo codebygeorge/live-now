@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getAuthToken } from './auth';
-import {BASE_API} from "../Constants";
+import {BASE_API} from "./constants";
 
 const server = BASE_API;
 // Add a response interceptor
@@ -11,7 +11,7 @@ export const catchAxiosError = (error) => {
 
 const API = axios.create({
     baseURL: server,
-    timeout: 3000,
+    timeout: 9000,
     headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
 });
 

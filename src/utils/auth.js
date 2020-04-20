@@ -7,3 +7,7 @@ export const getAuthToken = () => {
 export const setAuthToken = (value) => {
   return cookie.set('token', value);
 };
+
+export const redirectTo = (location) => {
+    return window.location.href = location ? location : '/';
+};

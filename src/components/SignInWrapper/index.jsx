@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInWrapper() {
     const classes = useStyles();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

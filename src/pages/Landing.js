@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button} from "react-bootstrap";
-import {isDesktop} from "../Constants";
+import {isDesktop} from "../utils/constants";
 
 class Landing extends Component {
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {myAxios, nFormatter} from './../Constants';
+import {myAxios, nFormatter} from '../utils/constants';
 import {Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton,} from '@material-ui/core';
 import UserProfilePicture from './../components/User/ProfilePicture';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
