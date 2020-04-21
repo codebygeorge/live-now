@@ -45,8 +45,7 @@ const ImageUpload = (props) => {
 
     const changeProfilePic = async (blob) => {
         const fd = new FormData();
-        console.log(blobik);
-        (blob) ? fd.append('profile_image', blobik) : fd.append('profile_image', blobik);
+        (blob) ? fd.append('profile_image', blob) : fd.append('profile_image', blob);
         fd.append('background_image', null);
         const {response, error} = await API
             .post('/account/uploadimage', fd,
