@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
-import ImageUpload from '../components/User/ImageUpload';
 import UserContext from "../components/UserContext";
 import { getAuthToken, redirectTo } from '../utils';
 import API, { catchAxiosError } from '../utils/axiosEnv';
@@ -82,9 +81,6 @@ const Details = (props) => {
                                 </CardContent>
                             </CardActionArea>
                         </Card>
-                    </Grid>
-                    <Grid item>
-                        {/*<Paper className={classes.paper}><ImageUpload /></Paper>*/}
                     </Grid>
                 </Grid>
             </div>
