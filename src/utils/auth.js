@@ -4,8 +4,8 @@ export const getAuthToken = () => {
     return cookie.get('token');
 };
 
-export const setAuthToken = (value) => {
-  return cookie.set('token', value);
+export const setAuthToken = (value, expireDate) => {
+  return cookie.set('token', value, expireDate);
 };
 
 export const redirectTo = (location) => {

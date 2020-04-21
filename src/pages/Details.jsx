@@ -84,7 +84,7 @@ const Details = (props) => {
                         </Card>
                     </Grid>
                     <Grid item>
-                        <Paper className={classes.paper}><ImageUpload /></Paper>
+                        {/*<Paper className={classes.paper}><ImageUpload /></Paper>*/}
                     </Grid>
                 </Grid>
             </div>

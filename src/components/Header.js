@@ -10,13 +10,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {redirectTo} from "../utils";
+import {getAuthToken, redirectTo, setAuthToken} from "../utils";
+import {Button} from "@material-ui/core";
 
 const menuItems = [
     {
         title: "Profile",
         icon: "user-circle",
-        link: '/profile',
+        link: '/details',
     },
     {
         title: "Category",
@@ -26,7 +27,7 @@ const menuItems = [
     {
         title: "My Followers",
         icon: "users",
-        link: '/details'
+        link: '/'
     },
     // {
     //     title: "Profile",
@@ -42,11 +43,18 @@ export default function Header(props) {
         setOpen(!open);
     };
 
+
+    const logOut = () => {
+        setAuthToken('', -1);
+        return redirectTo('/signIn');
+    };
+
     return (
         <>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <h1>Live Now</h1>
+                    {getAuthToken() ? <Button color="inherit" onClick={logOut}>Log Out</Button> : <Button color="inherit" onClick={() => redirectTo('/signIn')}>Login</Button>}
                 </Toolbar>
             </AppBar>
             <Drawer

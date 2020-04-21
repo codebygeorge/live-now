@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import API, {catchAxiosError} from "../../utils/axiosEnv";
-import {setAuthToken} from "../../utils";
+import {getAuthToken, redirectTo, setAuthToken} from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -56,6 +56,10 @@ export default function SignUpWrapper() {
         setDisabled(false);
     }, [validationErrors]);
 
+    useEffect(() => {
+        if(getAuthToken()) redirectTo('/details');
+    }, []);
+
     const submit = async (e) => {
         e.preventDefault();
         const {response, error} = await API.post('/auth/signup', {
@@ -70,7 +74,7 @@ export default function SignUpWrapper() {
             setValidationErrors(backEndErrorMessages);
         }
         if(response && response.success && response.data.id){
-            setAuthToken(response.data.token);
+            setAuthToken(response.data.token, '1d');
             return window.location.href = "/profile";
         }
     };

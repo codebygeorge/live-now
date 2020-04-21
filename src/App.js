@@ -1,7 +1,7 @@
-import React, {useContext, useReducer} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
-
-import {ThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
+import React, {useEffect, useReducer} from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { Button } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import Header from "./components/Header";
@@ -15,9 +15,14 @@ import SignUp from "./pages/SignUp";
 import Details from "./pages/Details";
 import Profile from "./pages/Profile";
 import StreamPage from "./pages/StreamPage";
-import UserContext, {initialState, UserReducer} from "./components/UserContext";
+import UserContext, { initialState, UserReducer } from "./components/UserContext";
+import {getAuthToken, redirectTo, setAuthToken} from "./utils";
+
 import './scss/style.scss';
 import './scss/bootstrap/bootstrap.min.css';
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import AppBar from "@material-ui/core/AppBar";
 
 const drawerWidth = 200;
 const theme = createMuiTheme({
@@ -108,7 +113,6 @@ export default function App() {
                 <UserContext.Provider value={UserProviderValue}>
                     <Header classes={classes}/>
                     <div className={classes.content}>
-                        <Toolbar/>
                         <main className='main'>
                             <Switch>
                                 <Route exact path="/" component={SignIn}/>

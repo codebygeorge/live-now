@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import API, {catchAxiosError} from '../../utils/axiosEnv';
-import { setAuthToken } from '../../utils';
+import {getAuthToken, redirectTo, setAuthToken} from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,6 +44,10 @@ export default function SignInWrapper() {
 
     const [errorMessage, setErrorMessage] = useState('');
 
+    useEffect(() => {
+        if(getAuthToken()) redirectTo('/details');
+    }, []);
+
     const submit = async (e) => {
         e.preventDefault();
         const {response, error} = await API.post('/auth/signin', {
@@ -52,8 +56,8 @@ export default function SignInWrapper() {
         }).catch(catchAxiosError);
         if(error) setErrorMessage(error);
         if(response && response.success && response.data.id){
-           setAuthToken(response.data.token);
-           return window.location.href = "/profile";
+           setAuthToken(response.data.token, '1d');
+           return redirectTo('/details');
         }
     };
 
