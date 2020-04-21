@@ -54,7 +54,10 @@ export default function SignInWrapper() {
             email,
             password
         }).catch(catchAxiosError);
-        if(error) setErrorMessage(error);
+        if(error){
+            console.log(error);
+            // setErrorMessage(error);
+        }
         if(response && response.success && response.data.id){
            setAuthToken(response.data.token, '1d');
            return redirectTo('/details');

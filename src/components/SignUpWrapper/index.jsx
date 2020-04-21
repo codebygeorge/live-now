@@ -212,13 +212,6 @@ export default function SignUpWrapper() {
                     >
                         Sign Up
                     </Button>
-                    {/*<Grid container justify="flex-end">*/}
-                    {/*    <Grid item>*/}
-                    {/*        <Link href="/signIn" variant="body2">*/}
-                    {/*            Already have an account? Sign in*/}
-                    {/*        </Link>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
                 </form>
             </div>
         </Container>
