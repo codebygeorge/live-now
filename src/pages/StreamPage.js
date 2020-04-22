@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Form, Button } from "react-bootstrap";
+import '../components/OpenViduVideoComponent/UserVideo.css';
 import axios from 'axios';
 import OpenViduSession from 'openvidu-react';
-import { BASE_API, MY_SECRET } from '../utils';
+import { BASE_API, MY_SECRET } from "../utils";
 
-class StramPage extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
+        this.OPENVIDU_SERVER_URL = BASE_API;
+        this.OPENVIDU_SERVER_SECRET = MY_SECRET;
         this.state = {
             mySessionId: 'SessionA',
             myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
@@ -70,42 +72,42 @@ class StramPage extends Component {
                     <div id="join">
                         <div id="join-dialog">
                             <h1> Join a video session </h1>
-                            <Form onSubmit={this.joinSession}>
-                                <Form.Group controlId="formParticipant">
-                                    <Form.Label>Participant:</Form.Label>
-                                    <Form.Control
+                            <form onSubmit={this.joinSession}>
+                                <p>
+                                    <label>Participant: </label>
+                                    <input
                                         type="text"
                                         id="userName"
                                         value={myUserName}
                                         onChange={this.handleChangeUserName}
                                         required
                                     />
-                                </Form.Group>
-
-                                <Form.Group controlId="formSessionId">
-                                    <Form.Label>Session Id</Form.Label>
-                                    <Form.Control
+                                </p>
+                                <p>
+                                    <label> Session: </label>
+                                    <input
                                         type="text"
                                         id="sessionId"
                                         value={mySessionId}
                                         onChange={this.handleChangeSessionId}
                                         required
                                     />
-                                </Form.Group>
-                                <Button name="commit" type="submit" value="JOIN">
-                                    Submit
-                                </Button>
-                            </Form>
+                                </p>
+                                <p>
+                                    <input name="commit" type="submit" value="JOIN" />
+                                </p>
+                            </form>
                         </div>
                     </div>
                 ) : (
-                    <div id="session" style={{}}>
+                    <div id="session">
                         <OpenViduSession
                             id="opv-session"
                             sessionName={mySessionId}
                             user={myUserName}
                             token={token}
-                            openviduServerUrl="livenowmedia.pw"
+                            openviduServerUrl={'https://livenowmedia.pw'}
+                            openviduSecret={'MY_SECRET'}
                             joinSession={this.handlerJoinSessionEvent}
                             leaveSession={this.handlerLeaveSessionEvent}
                             error={this.handlerErrorEvent}
@@ -130,48 +132,48 @@ class StramPage extends Component {
 
     getToken() {
         return this.createSession(this.state.mySessionId)
-        // .then((sessionId) => this.createToken(sessionId))
-        // .catch((Err) => console.error(Err));
+            // .then((sessionId) => this.createToken(sessionId))
+            // .catch((Err) => console.error(Err));
     }
 
     createSession(sessionId) {
         return new Promise((resolve, reject) => {
-            let data = JSON.stringify({ sessionName: sessionId });
+            var data = JSON.stringify({ customSessionId: sessionId });
             axios
-                .get(BASE_API + '/stream/getToken', data, {
+                .post(this.OPENVIDU_SERVER_URL + '/stream/getToken', data, {
                     headers: {
-                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + MY_SECRET),
+                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
                         'Content-Type': 'application/json',
                     },
                 })
                 .then((response) => {
                     console.log('CREATE SESION', response);
-                    resolve(response.data[0]);
+                    resolve(response.data.token);
                     this.setState({
-                        token: response.data[0],
-                        session: true,
-                    });
+                        token: response.data.token,
+                        session: true
+                    })
                 })
                 .catch((response) => {
-                    let error = Object.assign({}, response);
+                    var error = Object.assign({}, response);
                     if (error.response && error.response.status === 409) {
                         resolve(sessionId);
                     } else {
                         console.log(error);
                         console.warn(
-                            'No connection to OpenVidu Server. This may be a certificate error at ' + BASE_API,
+                            'No connection to OpenVidu Server. This may be a certificate error at ' + this.OPENVIDU_SERVER_URL,
                         );
                         if (
                             window.confirm(
                                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                                BASE_API +
+                                this.OPENVIDU_SERVER_URL +
                                 '"\n\nClick OK to navigate and accept it. ' +
                                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                                BASE_API +
+                                this.OPENVIDU_SERVER_URL +
                                 '"',
                             )
                         ) {
-                            window.location.assign(BASE_API + '/accept-certificate');
+                            window.location.assign(this.OPENVIDU_SERVER_URL + '/accept-certificate');
                         }
                     }
                 });
@@ -180,11 +182,11 @@ class StramPage extends Component {
 
     createToken(sessionId) {
         return new Promise((resolve, reject) => {
-            let data = JSON.stringify({ session: sessionId });
+            var data = JSON.stringify({ session: sessionId });
             axios
-                .post(BASE_API + '/api/tokens', data, {
+                .post(this.OPENVIDU_SERVER_URL + '/tokens', data, {
                     headers: {
-                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + MY_SECRET),
+                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
                         'Content-Type': 'application/json',
                     },
                 })
@@ -197,4 +199,4 @@ class StramPage extends Component {
     }
 }
 
-export default StramPage;
+export default App;
