@@ -105,6 +105,7 @@ class StramPage extends Component {
                             sessionName={mySessionId}
                             user={myUserName}
                             token={token}
+                            openviduServerUrl="livenowmedia.pw"
                             joinSession={this.handlerJoinSessionEvent}
                             leaveSession={this.handlerLeaveSessionEvent}
                             error={this.handlerErrorEvent}
