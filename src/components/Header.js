@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,9 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {getAuthToken, redirectTo, setAuthToken} from "../utils";
-import {Button} from "@material-ui/core";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getAuthToken, redirectTo, setAuthToken } from "../utils";
+import { Button } from "@material-ui/core";
 
 const menuItems = [
     {
@@ -36,6 +37,7 @@ const menuItems = [
 ];
 
 export default function Header(props) {
+    const Router = useHistory();
     const classes = props.classes;
     const [open, setOpen] = React.useState(false);
 
@@ -54,7 +56,7 @@ export default function Header(props) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <h1>Live Now</h1>
-                    {getAuthToken() ? <Button color="inherit" onClick={logOut}>Log Out</Button> : <Button color="inherit" onClick={() => redirectTo('/signIn')}>Login</Button>}
+                    {getAuthToken() ? <Button color="inherit" onClick={logOut}>Log Out</Button> : <Link to={{pathname: '/signIn'}}> Sign In</Link>}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -84,7 +86,7 @@ export default function Header(props) {
                 <List>
                     {menuItems.map((item, index) => (
                         <ListItem button key={index}>
-                            <ListItemIcon onClick={() => redirectTo(item.link)}>
+                            <ListItemIcon onClick={() => Router.push(item.link)}>
                                 <FontAwesomeIcon className='menu-icons' icon={item.icon}/>
                             </ListItemIcon>
                             <ListItemText>

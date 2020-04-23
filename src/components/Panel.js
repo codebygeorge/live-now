@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -10,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Toolbar from "@material-ui/core/Toolbar";
 import {Collapse, Button, IconButton} from '@material-ui/core';
+import API, { catchAxiosError } from "../utils/axiosEnv";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -23,8 +25,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Panel() {
     const classes = useStyles();
-    const [checked, setChecked] = React.useState([1]);
-
+    const Router = useHistory();
+    const [recommendedList, setRecommendedList] = React.useState([]);
+    const [topTen, setTopTen] = React.useState([]);
+    useEffect(() => {
+        (async () => {
+            const {response, error} = await API.get('/user/recommendedList').catch(catchAxiosError);
+            if(error){
+                console.log(error);
+                // setErrorMessage(error);
+            }
+            if(response && response.success && response.data){
+                if(response.data.top_ten_list && response.data.top_ten_list.length > 0){
+                    setTopTen(response.data.top_ten_list);
+                }
+                if(response.data.recommended_list && response.data.recommended_list.length > 0){
+                    setRecommendedList(response.data.recommended_list);
+                }
+            }
+        })();
+    }, []);
     // const handleToggle = (value) => () => {
     //     const currentIndex = checked.indexOf(value);
     //     const newChecked = [...checked];
@@ -76,17 +96,17 @@ export default function Panel() {
 
             <Collapse in={expanded1} timeout="auto" unmountOnExit>
                 <List dense className={classes.root}>
-                    {[0, 1, 2, 3].map((value) => {
-                        const labelId = `checkbox-list-secondary-label-${value}`;
+                    {recommendedList.map((item, index) => {
+                        const labelId = `checkbox-list-secondary-label-${index}`;
                         return (
-                            <ListItem key={value} button>
+                            <ListItem key={index} button onClick={() => Router.push('/user/' + item.id)}>
                                 <ListItemAvatar>
                                     <Avatar
-                                        alt={`Avatar n°${value + 1}`}
-                                        src={`/static/images/avatar/${value + 1}.jpg`}
+                                        alt={item.profile_image}
+                                        src={item.profile_image}
                                     />
                                 </ListItemAvatar>
-                                <ListItemText id={labelId} primary={`Line item ${value + 1}`}/>
+                                <ListItemText primary={item.username}/>
                                 {/*<ListItemSecondaryAction>*/}
                                 {/*<Checkbox*/}
                                 {/*edge="end"*/}
@@ -120,17 +140,17 @@ export default function Panel() {
 
             <Collapse in={expanded2} timeout="auto" unmountOnExit>
             <List dense className={classes.root}>
-                {[0, 1, 2, 3].map((value) => {
-                    const labelId = `checkbox-list-secondary-label-${value}`;
+                {topTen.map((item, index) => {
+                    const labelId = `checkbox-list-secondary-label-${index}`;
                     return (
-                        <ListItem key={value} button>
+                        <ListItem key={index} button onClick={() => Router.push('/user/' + item.id)}>
                             <ListItemAvatar>
                                 <Avatar
-                                    alt={`Avatar n°${value + 1}`}
-                                    src={`/static/images/avatar/${value + 1}.jpg`}
+                                    alt={item.username}
+                                    src={item.profile_image}
                                 />
                             </ListItemAvatar>
-                            <ListItemText id={labelId} primary={`Line item ${value + 1}`}/>
+                            <ListItemText primary={item.username}/>
                             {/*<ListItemSecondaryAction>*/}
                             {/*<Checkbox*/}
                             {/*edge="end"*/}

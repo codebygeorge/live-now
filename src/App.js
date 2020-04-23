@@ -115,11 +115,10 @@ export default function App() {
                     <div className={classes.content}>
                         <main className='main'>
                             <Switch>
-                                <Route exact path="/" component={SignIn}/>
-                                <Route exact path="/landing" component={Landing}/>
-
-                                    <Route exact path="/details" component={Details}/>
-                                    <Route exact path="/categories" component={Profile}/>
+                                <Route exact path="/signIn" component={SignIn}/>
+                                <Route exact path="/" component={Landing}/>
+                                <Route exact path="/details" component={Details}/>
+                                <Route exact path="/categories" component={Profile}/>
                                 <Route exact path="/signUp" component={SignUp}/>
                                 <Route exact path="/streamPage" component={StreamPage}/>
                                 <Redirect to="/"/>

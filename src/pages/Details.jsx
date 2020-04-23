@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Details = (props) => {
     const classes = useStyles();
-    const {userState, userDispatch} = useContext(UserContext);
-    const [user, setUser] = useState({...props.user});
+    const { userState, userDispatch } = useContext(UserContext);
     useEffect(() => {
         if(!getAuthToken()) {
             redirectTo('/');
@@ -46,7 +45,6 @@ const Details = (props) => {
                     photo: userData.profile_image,
                     about: userData.about
                 };
-                setUser(stateData);
                 userDispatch(stateData);
             }
             if(error) console.log(error)
@@ -66,17 +64,20 @@ const Details = (props) => {
                                     alt="Profile image"
                                     height="200"
                                     title="Contemplative Reptile"
-                                    src={user.profile_image}
+                                    src={userState.photo}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Username - {user.username}
+                                       Full Name -  {userState.firstname + ' ' + userState.lastname }
                                     </Typography>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                       Full Name -  {user.firstname + ' ' + user.lastname }
+                                        Email - {userState.email}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Username - {userState.username}
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
-                                        {user.about}
+                                        {userState.about}
                                     </Typography>
                                 </CardContent>
                             </CardActionArea>
