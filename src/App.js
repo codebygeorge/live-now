@@ -17,12 +17,15 @@ import Profile from "./pages/Profile";
 import StreamPage from "./pages/StreamPage";
 import UserContext, { initialState, UserReducer } from "./components/UserContext";
 import {getAuthToken, redirectTo, setAuthToken} from "./utils";
+import GuestPage from "./pages/user/[guestId]";
+import Categories from "./pages/Categories";
 
 import './scss/style.scss';
 import './scss/bootstrap/bootstrap.min.css';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
+import API, {catchAxiosError} from "./utils/axiosEnv";
 
 const drawerWidth = 200;
 const theme = createMuiTheme({
@@ -107,6 +110,31 @@ export default function App() {
     const classes = useStyles();
     const [userState, userDispatch] = useReducer(UserReducer, initialState);
     const UserProviderValue = { userState, userDispatch };
+
+    useEffect(() => {
+        if(getAuthToken()) {
+            (async () => {
+                const { response, error } = await API.get('/account/details').catch(catchAxiosError);
+                if(response && response.success) {
+                    const userData = response.data;
+                    const stateData = {
+                        id: userData.id,
+                        firstname: userData.firstname,
+                        lastname : userData.lastname,
+                        username: userData.username,
+                        email: userData.email,
+                        photo: userData.profile_image,
+                        about: userData.about
+                    };
+                    userDispatch(stateData);
+                }
+                if(error) {
+                    console.log(error.data)
+                }
+            })();
+        }
+    }, []);
+
     return (
         <ThemeProvider theme={theme}>
             <div className={`${classes.root} App`}>
@@ -116,9 +144,10 @@ export default function App() {
                         <main className='main'>
                             <Switch>
                                 <Route exact path="/signIn" component={SignIn}/>
-                                <Route exact path="/" component={Landing}/>
+                                <Route exact path="/" component={Profile}/>
+                                <Route exact path="/user/:id" component={GuestPage}/>
                                 <Route exact path="/details" component={Details}/>
-                                <Route exact path="/categories" component={Profile}/>
+                                <Route exact path="/categories" component={Categories}/>
                                 <Route exact path="/signUp" component={SignUp}/>
                                 <Route exact path="/streamPage" component={StreamPage}/>
                                 <Redirect to="/"/>

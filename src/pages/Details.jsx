@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import UserContext from "../components/UserContext";
 import { getAuthToken, redirectTo } from '../utils';
 import API, { catchAxiosError } from '../utils/axiosEnv';
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     detailsCard: {
@@ -29,28 +30,22 @@ const useStyles = makeStyles((theme) => ({
 const Details = (props) => {
     const classes = useStyles();
     const { userState, userDispatch } = useContext(UserContext);
+    const [profileImage, setProfileImage] = useState(null);
     useEffect(() => {
         if(!getAuthToken()) {
             redirectTo('/');
         }
-        (async () => {
-            const { response, error } = await API.get('/account/details').catch(catchAxiosError);
-            if(response && response.success) {
-                const userData = response.data;
-                const stateData = {
-                    firstname: userData.firstname,
-                    lastname : userData.lastname,
-                    username: userData.username,
-                    email: userData.email,
-                    photo: userData.profile_image,
-                    about: userData.about
-                };
-                userDispatch(stateData);
-            }
-            if(error) console.log(error)
-        })();
-    }, []);
+    }, [userState]);
 
+
+    const uploadImages = async () => {
+        const fd = new FormData();
+        fd.append('profile_image', profileImage);
+        fd.append('background_image', null);
+        const {response, error} = await API.post('/account/uploadimage', fd).catch(catchAxiosError);
+        console.log(response);
+        console.log(error);
+    };
 
     return (
         <>
@@ -84,6 +79,13 @@ const Details = (props) => {
                         </Card>
                     </Grid>
                 </Grid>
+                <input
+                    type="file"
+                    onChange={(e) => {
+                        setProfileImage(e.target.files[0]);
+                    }}
+                />
+                <Button size="medium" onClick={uploadImages}>upload</Button>
             </div>
         </>
     );

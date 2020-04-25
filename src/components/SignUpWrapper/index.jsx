@@ -62,7 +62,7 @@ export default function SignUpWrapper() {
 
     const submit = async (e) => {
         e.preventDefault();
-        const {response, error} = await API.post('/auth/signup', {
+        const {response, error} = await API.post('/auth/signUp', {
             firstname: firstname, lastname: lastname ,email, password, username,
         }).catch(catchAxiosError);
         if(typeof error === 'object') {
