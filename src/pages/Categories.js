@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
+import Pagination from '@material-ui/lab/Pagination';
 import API, { catchAxiosError } from '../utils/axiosEnv';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Card, CardActions, CardContent, CardHeader, IconButton} from "@material-ui/core";
 import UserProfilePicture from "../components/User/ProfilePicture";
-import {nFormatter} from "../utils";
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
     const [categoryUsers, setCategoryUsers] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
+    const [paginationData, setPaginationData] = useState({pagesCount: 0, hasNext: false, pageSize: 1});
     useEffect(() => {
         (async () => getCategoriesList(1, 1))();
     }, []);
@@ -22,6 +22,7 @@ const Categories = () => {
         if(response && response.success){
             console.log(response.data.list);
             setCategories(response.data.list);
+            setPaginationData({...paginationData, hasNext: !(paginationData.pagesCount === page), pagesCount: response.data.total_pages})
         }
         if(error) console.log(error);
     };
@@ -37,7 +38,7 @@ const Categories = () => {
                           )}
                           <CardHeader
                               className='card-header'
-                              avatar={<UserProfilePicture image={user.profile_Image}/>}
+                              avatar={<UserProfilePicture image={user.profile_image}/>}
                               action={
                                   <IconButton aria-label="settings" size='medium' className='sub-menu'>
                                       <FontAwesomeIcon icon={['fab', 'buffer']}/>
@@ -86,6 +87,15 @@ const Categories = () => {
                                   {item && item.users && item.users.length > 0 && drawCategoryUsersList(item.users)}
                               </div>
                           ))}
+                          <Pagination
+                              count={paginationData.pagesCount}
+                              disabled={!(paginationData.pagesCount > 1)}
+                              onChange={(e, pageNumber) => {
+                                  (async () => {
+                                      await getCategoriesList(pageNumber, paginationData.pageSize);
+                                  })();
+                              }}
+                          />
                       </div>
                   )
               ) : (
